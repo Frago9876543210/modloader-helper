@@ -115,7 +115,7 @@ fi
 			echo "${LG} > modloader-sdk and CoreMod was downloaded!$R"
 			echo "${LY} > modloader-sdk saved in $PWD$R"
 
-			echo "${LY}>>> Installation successful. Try ${LG}./start.sh ${LY}<<<"
+			echo "${LY}>>> Installation successful. Try ${LG}./start.sh ${LY}<<<$R"
 		fi
 		;;
 	"gen")
