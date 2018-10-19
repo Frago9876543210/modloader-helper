@@ -36,6 +36,24 @@ check_args(){
 	fi
 }
 
+build_mod(){
+	if [[ -d "$MODS_CODE/$1" ]]; then
+		if [[ -f "$1/CMakeLists.txt" ]]; then
+			cd $1
+		else
+			cd $MODS_CODE/$1
+		fi
+
+		mkdir -p build && cd build
+		export CMAKE_PREFIX_PATH=$SDK
+		cmake .. && make || exit 1
+
+		cp *.so $LIBS
+	else
+		echo "${LR} Could not find $1"
+	fi
+}
+
 case $1 in
 	"install")
 		printf "${LY} > Do you really want to download the server to this directory (Y/n)?$R "
@@ -127,11 +145,12 @@ extern \"C\" void modloader_on_server_start(void* serverInstance) {
 	"build")
 		check_args $# 2
 
-		cd $MODS_CODE/$2 && mkdir -p build && cd build
-		export CMAKE_PREFIX_PATH=$SDK
-		cmake .. && make || exit 1
-
-		cp *.so $LIBS
+		if [[ "$2" == "all" ]]; then
+			export -f build_mod && export SDK=$SDK && export LIBS=$LIBS
+			find "$MODS_CODE" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 -I '@' bash -c 'build_mod @'
+		else
+			build_mod $2
+		fi
 		;;
 	*)
 		show_help
