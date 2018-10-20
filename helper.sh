@@ -45,7 +45,6 @@ build_mod(){
 		fi
 
 		mkdir -p build && cd build
-		export CMAKE_PREFIX_PATH=$SDK
 		cmake .. && make || exit 1
 
 		cp *.so $LIBS
@@ -125,6 +124,7 @@ fi
 		echo "cmake_minimum_required(VERSION 3.0)
 project($2)
 
+set(CMAKE_PREFIX_PATH ../../sdk)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -146,7 +146,7 @@ extern \"C\" void modloader_on_server_start(void* serverInstance) {
 		check_args $# 2
 
 		if [[ "$2" == "all" ]]; then
-			export -f build_mod && export SDK=$SDK && export LIBS=$LIBS
+			export -f build_mod && export LIBS=$LIBS
 			find "$MODS_CODE" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 -I '@' bash -c 'build_mod @'
 		else
 			build_mod $2
