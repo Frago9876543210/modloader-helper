@@ -45,7 +45,7 @@ build_mod(){
 		fi
 
 		mkdir -p build && cd build
-		cmake .. && make || exit 1
+		cmake .. && make -j12 || exit 1
 
 		cp *.so $LIBS
 	else
