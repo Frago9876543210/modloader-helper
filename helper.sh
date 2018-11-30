@@ -36,6 +36,11 @@ check_args(){
 	fi
 }
 
+setup_sdk(){
+	rm -rf sdk && mkdir -p sdk && cd sdk
+	download $(get_latest_release "minecraft-linux/server-modloader" "*\.zip") mod_sdk.zip true
+}
+
 build_mod(){
 	if [[ -d "$MODS_CODE/$1" ]]; then
 		if [[ -f "$1/CMakeLists.txt" ]]; then
@@ -109,8 +114,7 @@ fi
 " > start.sh
 			chmod +x start.sh
 
-			rm -rf sdk && mkdir -p sdk && cd sdk
-			download $(get_latest_release "minecraft-linux/server-modloader" "*\.zip") mod_sdk.zip true
+			setup_sdk
 			echo "${LG} > modloader-sdk and CoreMod was downloaded!$R"
 			echo "${LY} > modloader-sdk saved in $PWD$R"
 
