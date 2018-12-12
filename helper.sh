@@ -76,7 +76,9 @@ LIBS=.
 BDS=./bedrock_server
 
 start_server(){
-	if [ -n \"\$DEBUG\" ]; then
+	if [ -n \"\$VANILLA\" ]; then
+		LD_LIBRARY_PATH=\$LIBS ./bedrock_server \$@
+	elif [ -n \"\$DEBUG\" ]; then
 		gdb \$BDS \$# -ex \"set environment LD_PRELOAD \$PRELOAD\" \\
 			-ex \"set environment LD_LIBRARY_PATH \$LIBS\" \\
 			-ex \"run\" \\
@@ -89,6 +91,9 @@ start_server(){
 
 while getopts \"dl\" OPTION 2> /dev/null; do
 	case \${OPTION} in
+		v)
+			VANILLA=true
+			;;
 		d)
 			DEBUG=true
 			;;
