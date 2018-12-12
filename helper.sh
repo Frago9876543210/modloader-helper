@@ -143,6 +143,7 @@ add_library($2 SHARED src/main.cpp)
 target_link_libraries($2 PUBLIC ModLoader)" > "$MODS_CODE/$2/CMakeLists.txt"
 		echo "#include <modloader/log.h>
 #include <modloader/statichook.h>
+
 using namespace modloader;
 
 #define TAG \"$2\"
