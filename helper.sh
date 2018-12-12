@@ -89,7 +89,7 @@ start_server(){
 	fi
 }
 
-while getopts \"dl\" OPTION 2> /dev/null; do
+while getopts \"vdl\" OPTION 2> /dev/null; do
 	case \${OPTION} in
 		v)
 			VANILLA=true
