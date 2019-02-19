@@ -9,6 +9,7 @@ W=$(echo -en '\033[01;37m')
 LIBS="$PWD/mods"
 MODS_CODE="$PWD/code"
 SDK="$PWD/sdk"
+CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=Release"
 
 show_help(){
 	echo "${LC}Usage: $LG$0 ${LR}command ${LC}<${LY}arguments${LC}>
@@ -50,7 +51,7 @@ build_mod(){
 		fi
 
 		mkdir -p build && cd build
-		cmake .. && make -j2 || exit 1
+		cmake $CMAKE_FLAGS .. && make -j2 || exit 1
 
 		cp *.so $LIBS
 	else
