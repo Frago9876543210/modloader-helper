@@ -79,7 +79,7 @@ start_server(){
 	if [ -n \"\$VANILLA\" ]; then
 		LD_LIBRARY_PATH=\$LIBS ./bedrock_server \$@
 	elif [ -n \"\$DEBUG\" ]; then
-		gdb \$BDS \$# -ex \"set environment LD_PRELOAD \$PRELOAD\" \\
+		gdb \$BDS \$@ -ex \"set environment LD_PRELOAD \$PRELOAD\" \\
 			-ex \"set environment LD_LIBRARY_PATH \$LIBS\" \\
 			-ex \"run\" \\
 			-ex \"set confirm off\" \\
@@ -109,9 +109,9 @@ done
 if [ -n \"\$DO_LOOP\" ]; then
 	while true; do
 		start_server
-		echo \"To escape the loop, press CTRL+C now. Otherwise, wait 3 seconds for the server to restart.\"
+		echo \"To escape the loop, press CTRL+C now. Otherwise, wait 5 seconds for the server to restart.\"
 		echo \"\"
-		sleep 3
+		sleep 5
 	done
 else
 	start_server
