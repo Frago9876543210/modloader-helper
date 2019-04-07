@@ -64,7 +64,7 @@ case $1 in
 		printf "${LY} > Do you really want to download the server to this directory (Y/n)?$R "
 		read answer
 		if [[ "$answer" != "${answer#[Yy]}" ]]; then
-			download $(curl -s https://minecraft.net/en-us/download/server/bedrock/ | grep -Eo "https://\S*/bin-linux/\S*" | sed -e 's/^"//' -e 's/"$//') server.zip true
+			download $(curl -sL https://minecraft.net/en-us/download/server/bedrock/ | grep -Eo "https://\S*/bin-linux/\S*" | sed -e 's/^"//' -e 's/"$//') server.zip true
 			echo "${LG} > Server was downloaded!$R"
 
 			download $(get_latest_release "minecraft-linux/server-modloader" "*lib.*\.so") libserver_modloader.so
