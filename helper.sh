@@ -78,7 +78,7 @@ BDS=./bedrock_server
 
 start_server(){
 	if [ -n \"\$VANILLA\" ]; then
-		LD_LIBRARY_PATH=\$LIBS ./bedrock_server \$@
+		LD_LIBRARY_PATH=\$LIBS \$BDS \$@
 	elif [ -n \"\$DEBUG\" ]; then
 		gdb \$BDS \$@ -ex \"set environment LD_PRELOAD \$PRELOAD\" \\
 			-ex \"set environment LD_LIBRARY_PATH \$LIBS\" \\
